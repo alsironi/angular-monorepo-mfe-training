@@ -1,0 +1,21 @@
+{
+  "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "npmScope": "ecom",
+  "projectNameAndRootFormat": "as-provided",
+  "plugins": [
+    {
+      "plugin": "@nx/angular/plugin",
+      "options": {
+        "presetName": "npm"
+      }
+    }
+  ],
+  "targetDefaults": {
+    "@nx/jest:jest": {
+      "options": {
+        "passWithNoTests": true
+      }
+    }
+  },
+  "defaultBase": "main"
+}
