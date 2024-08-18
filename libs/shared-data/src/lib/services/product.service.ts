@@ -1,19 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal, computed } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
-import { Product, ProductFilter } from '../models/product.model';
 
 @Injectable({ providedIn: 'root' })
 export class ProductService {
-  private apiUrl = '/api/products';
-
+  private cache = signal(new Map());
+  private loading = signal(false);
+  
+  public products = computed(() => Array.from(this.cache().values()));
+  
   constructor(private http: HttpClient) {}
-
-  getProducts(filter?: ProductFilter): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl);
+  
+  getProducts(page: number = 1): Observable<any> {
+    return this.http.get(`/api/products?page=${page}`);
   }
-
-  getProduct(id: string): Observable<Product> {
-    return this.http.get<Product>(`${this.apiUrl}/${id}`);
+  
+  getProductById(id: string): Observable<any> {
+    return this.http.get(`/api/products/${id}`);
   }
 }
