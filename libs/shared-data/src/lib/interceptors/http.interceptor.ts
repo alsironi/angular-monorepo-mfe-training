@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import { Observable, throwError } from 'rxjs';
+import { catchError } from 'rxjs/operators';
 
 @Injectable()
 export class ApiInterceptor implements HttpInterceptor {
@@ -13,10 +14,24 @@ export class ApiInterceptor implements HttpInterceptor {
         'Authorization': `Bearer ${this.getToken()}`
       }
     });
-    return next.handle(apiReq);
+    
+    return next.handle(apiReq).pipe(
+      catchError((error: HttpErrorResponse) => {
+        console.error('HTTP Error:', error.status);
+        if (error.status === 401) {
+          this.handleUnauthorized();
+        }
+        return throwError(() => error);
+      })
+    );
   }
   
   private getToken(): string {
     return localStorage.getItem('auth_token') || '';
+  }
+  
+  private handleUnauthorized(): void {
+    localStorage.removeItem('auth_token');
+    window.location.href = '/login';
   }
 }
