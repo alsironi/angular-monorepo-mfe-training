@@ -18,12 +18,15 @@ export class AccessibilityService {
     }
   }
   
-  announceToScreenReader(message: string): void {
+  announceToScreenReader(message: string, priority: 'polite' | 'assertive' = 'polite'): void {
     const announcement = document.createElement('div');
     announcement.setAttribute('role', 'status');
-    announcement.setAttribute('aria-live', 'polite');
+    announcement.setAttribute('aria-live', priority);
+    announcement.setAttribute('aria-atomic', 'true');
     announcement.textContent = message;
     document.body.appendChild(announcement);
-    setTimeout(() => announcement.remove(), 1000);
+    
+    // Ensure screen reader has time to read
+    setTimeout(() => announcement.remove(), 3000);
   }
 }
