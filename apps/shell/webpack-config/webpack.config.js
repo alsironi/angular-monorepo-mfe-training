@@ -1,8 +1,10 @@
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
+const packageJson = require('../package.json');
 
 module.exports = {
   output: {
-    uniqueName: 'shell'
+    uniqueName: 'shell',
+    publicPath: 'auto'
   },
   optimization: {
     runtimeChunk: false
@@ -12,14 +14,19 @@ module.exports = {
       name: 'shell',
       filename: 'remoteEntry.js',
       remotes: {
-        'products-mfe': 'products@http://localhost:4202/remoteEntry.js',
-        'cart-mfe': 'cart@http://localhost:4203/remoteEntry.js',
-        'checkout-mfe': 'checkout@http://localhost:4204/remoteEntry.js'
+        products: 'products@http://localhost:4201/remoteEntry.js',
+        cart: 'cart@http://localhost:4202/remoteEntry.js',
+        checkout: 'checkout@http://localhost:4203/remoteEntry.js'
       },
       exposes: {
-        './SharedModule': './src/app/shared.module.ts'
+        './SharedModule': 'libs/shared-data/src/index.ts'
       },
-      shared: ['@angular/core', '@angular/common', 'rxjs']
+      shared: {
+        '@angular/core': { singleton: true, strictVersion: false },
+        '@angular/common': { singleton: true, strictVersion: false },
+        '@angular/router': { singleton: true, strictVersion: false },
+        rxjs: { singleton: true, strictVersion: false }
+      }
     })
   ]
 };
