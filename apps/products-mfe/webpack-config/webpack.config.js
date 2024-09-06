@@ -2,20 +2,22 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 
 module.exports = {
   output: {
-    uniqueName: 'productsMfe'
-  },
-  optimization: {
-    runtimeChunk: false
+    uniqueName: 'products',
+    publicPath: 'auto'
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'productsMfe',
+      name: 'products',
       filename: 'remoteEntry.js',
       exposes: {
-        './ProductsModule': './src/app/products/products.module.ts',
-        './ProductListComponent': './src/app/products/product-list.component.ts'
+        './ProductsModule': 'apps/products-mfe/src/app/products.module.ts',
+        './ProductsRoutes': 'apps/products-mfe/src/app/products.routes.ts'
       },
-      shared: ['@angular/core', '@angular/common', 'rxjs']
+      shared: {
+        '@angular/core': { singleton: true, strictVersion: false },
+        '@angular/common': { singleton: true, strictVersion: false },
+        rxjs: { singleton: true, strictVersion: false }
+      }
     })
   ]
 };
