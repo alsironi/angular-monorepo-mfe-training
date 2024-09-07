@@ -2,16 +2,22 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 
 module.exports = {
   output: {
-    uniqueName: 'cartMfe'
+    uniqueName: 'cart',
+    publicPath: 'auto'
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'cartMfe',
+      name: 'cart',
       filename: 'remoteEntry.js',
       exposes: {
-        './CartModule': './src/app/cart/cart.module.ts'
+        './CartModule': 'apps/cart-mfe/src/app/cart.module.ts',
+        './CartRoutes': 'apps/cart-mfe/src/app/cart.routes.ts'
       },
-      shared: ['@angular/core', '@angular/common', 'rxjs']
+      shared: {
+        '@angular/core': { singleton: true, strictVersion: false },
+        '@angular/common': { singleton: true, strictVersion: false },
+        rxjs: { singleton: true, strictVersion: false }
+      }
     })
   ]
 };
