@@ -2,16 +2,22 @@ const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPl
 
 module.exports = {
   output: {
-    uniqueName: 'checkoutMfe'
+    uniqueName: 'checkout',
+    publicPath: 'auto'
   },
   plugins: [
     new ModuleFederationPlugin({
-      name: 'checkoutMfe',
+      name: 'checkout',
       filename: 'remoteEntry.js',
       exposes: {
-        './CheckoutModule': './src/app/checkout/checkout.module.ts'
+        './CheckoutModule': 'apps/checkout-mfe/src/app/checkout.module.ts',
+        './CheckoutRoutes': 'apps/checkout-mfe/src/app/checkout.routes.ts'
       },
-      shared: ['@angular/core', '@angular/common', 'rxjs']
+      shared: {
+        '@angular/core': { singleton: true, strictVersion: false },
+        '@angular/common': { singleton: true, strictVersion: false },
+        rxjs: { singleton: true, strictVersion: false }
+      }
     })
   ]
 };
