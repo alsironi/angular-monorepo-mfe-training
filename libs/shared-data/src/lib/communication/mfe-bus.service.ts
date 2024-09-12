@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Subject, Observable } from 'rxjs';
+import { Subject, Observable, BehaviorSubject } from 'rxjs';
+import { filter } from 'rxjs/operators';
 
 export interface MFEEvent {
   source: string;
@@ -10,21 +11,31 @@ export interface MFEEvent {
 
 @Injectable({ providedIn: 'root' })
 export class MFEBusService {
-  private eventBus = new Subject<MFEEvent>();
-  public events$: Observable<MFEEvent> = this.eventBus.asObservable();
+  private eventBus = new BehaviorSubject<MFEEvent | null>(null);
+  public events$: Observable<MFEEvent> = this.eventBus.asObservable().pipe(
+    filter(event => event !== null)
+  );
+  
+  private listeners = new Map<string, Subject<MFEEvent>>();
   
   emit(source: string, type: string, payload: any): void {
-    this.eventBus.next({
+    const event: MFEEvent = {
       source,
       type,
       payload,
       timestamp: new Date()
-    });
+    };
+    this.eventBus.next(event);
+    
+    if (this.listeners.has(type)) {
+      this.listeners.get(type)!.next(event);
+    }
   }
   
   onEvent(type: string): Observable<MFEEvent> {
-    return this.events$.pipe(
-      // filter(e => e.type === type)
-    );
+    if (!this.listeners.has(type)) {
+      this.listeners.set(type, new Subject<MFEEvent>());
+    }
+    return this.listeners.get(type)!.asObservable();
   }
 }
