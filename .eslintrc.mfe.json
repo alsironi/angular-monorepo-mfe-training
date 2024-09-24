@@ -1,0 +1,18 @@
+{
+  "root": true,
+  "overrides": [
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "no-console": ["warn", { "allow": ["error", "warn"] }],
+        "@angular-eslint/component-selector": ["error", { "type": "element", "prefix": "app" }],
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": ["@angular/core/index", "rxjs/internal/*"]
+          }
+        ]
+      }
+    }
+  ]
+}
