@@ -1,0 +1,28 @@
+<div class="products-container" role="region" aria-label="Products list">
+  <div class="filter-bar">
+    <button *ngFor="let cat of categories" 
+            (click)="filterByCategory(cat)"
+            [attr.aria-pressed]="selectedCategory() === cat"
+            class="filter-btn">
+      {{ cat }}
+    </button>
+  </div>
+  
+  <div *ngIf="loading()" class="loading" role="status">
+    Loading products...
+  </div>
+  
+  <div class="products-grid" *ngIf="!loading()">
+    <article *ngFor="let product of filteredProducts()" 
+             class="product-card"
+             role="region"
+             [attr.aria-label]="product.name">
+      <img [src]="product.image" [alt]="product.name" />
+      <h3>{{ product.name }}</h3>
+      <p class="price">${{ product.price }}</p>
+      <button (click)="selectProduct(product)" aria-label="View {{ product.name }}">
+        View Details
+      </button>
+    </article>
+  </div>
+</div>
