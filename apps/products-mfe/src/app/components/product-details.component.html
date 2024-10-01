@@ -1,0 +1,12 @@
+<div class="product-details" *ngIf="product() as prod" role="region" aria-label="Product details">
+  <img [src]="prod.image" [alt]="prod.name" />
+  <h1>{{ prod.name }}</h1>
+  <p class="price">${{ prod.price }}</p>
+  <p class="description">{{ prod.description }}</p>
+  
+  <div class="actions">
+    <button (click)="addToCart()" class="btn-primary" aria-label="Add to cart">
+      Add to Cart
+    </button>
+  </div>
+</div>
