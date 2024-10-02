@@ -1,0 +1,38 @@
+<form [formGroup]="checkoutForm" (ngSubmit)="submit()" role="form" aria-label="Checkout form">
+  <fieldset>
+    <legend>Shipping Information</legend>
+    
+    <div class="form-group">
+      <label for="firstName">First Name *</label>
+      <input id="firstName" formControlName="firstName" required />
+    </div>
+    
+    <div class="form-group">
+      <label for="lastName">Last Name *</label>
+      <input id="lastName" formControlName="lastName" required />
+    </div>
+    
+    <div class="form-group">
+      <label for="email">Email *</label>
+      <input id="email" type="email" formControlName="email" required />
+    </div>
+    
+    <div class="form-group">
+      <label for="address">Address *</label>
+      <textarea id="address" formControlName="address" required></textarea>
+    </div>
+  </fieldset>
+  
+  <fieldset>
+    <legend>Payment Information</legend>
+    
+    <div class="form-group">
+      <label for="cardNumber">Card Number *</label>
+      <input id="cardNumber" formControlName="cardNumber" required />
+    </div>
+  </fieldset>
+  
+  <button type="submit" [disabled]="submitting()">
+    {{ submitting() ? 'Processing...' : 'Complete Purchase' }}
+  </button>
+</form>
