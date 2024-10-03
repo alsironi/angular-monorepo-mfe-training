@@ -1,0 +1,22 @@
+<div class="cart-item" role="region" [attr.aria-label]="'Cart item: ' + item().name">
+  <img [src]="item().image" [alt]="item().name" class="item-image" />
+  
+  <div class="item-details">
+    <h3>{{ item().name }}</h3>
+    <p class="price">${{ item().price }}</p>
+  </div>
+  
+  <div class="quantity-control">
+    <input type="number" [(ngModel)]="item().quantity" 
+           (change)="onQuantityChange(item().quantity)"
+           min="1" aria-label="Quantity" />
+  </div>
+  
+  <div class="item-total">
+    <strong>${{ item().price * item().quantity }}</strong>
+  </div>
+  
+  <button (click)="onRemove()" class="btn-remove" aria-label="Remove item">
+    Remove
+  </button>
+</div>
