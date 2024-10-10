@@ -1,0 +1,16 @@
+<div class="gallery" role="region" aria-label="Product images gallery">
+  <div class="main-image">
+    <img [src]="images()[currentIndex()]" [alt]="'Product image ' + (currentIndex() + 1)" />
+    <button (click)="prev()" class="btn-nav btn-prev" aria-label="Previous image">❮</button>
+    <button (click)="next()" class="btn-nav btn-next" aria-label="Next image">❯</button>
+  </div>
+  
+  <div class="thumbnails">
+    <button *ngFor="let img of images(); let i = index"
+            (click)="selectImage(i)"
+            [class.active]="currentIndex() === i"
+            [attr.aria-pressed]="currentIndex() === i">
+      <img [src]="img" [alt]="'Thumbnail ' + (i + 1)" />
+    </button>
+  </div>
+</div>
