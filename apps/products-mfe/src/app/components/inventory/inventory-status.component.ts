@@ -1,0 +1,1 @@
+import { Component, input } from '@angular/core'; @Component({selector: 'app-inventory', standalone: true, imports: [], template: '<div>Stock: {{ stock() }}</div>'}) export class InventoryStatusComponent { stock = input(0); }
