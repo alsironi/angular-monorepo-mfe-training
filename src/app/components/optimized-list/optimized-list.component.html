@@ -1,0 +1,7 @@
+<div class="optimized-list">
+  <virtual-scroller [items]="items" [minBufferPx]="100" [maxBufferPx]="200">
+    <div *cdkVirtualFor="let item of items" class="list-item">
+      {{ item.name }}
+    </div>
+  </virtual-scroller>
+</div>
