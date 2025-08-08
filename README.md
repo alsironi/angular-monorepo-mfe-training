@@ -1,52 +1,23 @@
 # Angular Monorepo MFE Training
 
-A comprehensive training project replicating enterprise e-commerce migration to Angular 18 with Module Federation and NX monorepo architecture.
+A comprehensive Angular 18 monorepo application demonstrating Module Federation, modern Angular patterns, and enterprise best practices.
 
-## Project Overview
-
-**Training Scope**: Migrating a monolithic e-commerce platform (Telcom Company e-commerce, 39M customers) to a scalable micro-frontend architecture using Webpack Module Federation + NX.
-
-**Status**: 🔄 In Progress
-**Technology**: Angular 17→18, NX, Module Federation, TypeScript, Jest, Cypress
-
-## Architecture
-
-```
-apps/
-├── shell (MFE Host - Main e-commerce app)
-├── products-mfe (Remote - Product Catalog)
-├── cart-mfe (Remote - Shopping Cart)
-└── checkout-mfe (Remote - Checkout Flow)
-
-libs/
-├── shared-ui (Reusable UI components)
-├── shared-data (Services, models, types)
-├── shared-utils (Helpers, validators)
-└── shared-styles (Tailwind, CSS variables)
-```
-
-## Key Learning Areas
-
-- ✅ NX Workspace Management
-- ✅ Webpack Module Federation
-- ✅ Scalable Architecture Patterns
-- ✅ Angular 17→18 Migration
-- ✅ Angular Signals & RxJS
-- ✅ Testing Strategy (Jest >85% coverage)
-- ✅ E2E Testing (Cypress)
-- ✅ Performance Optimization
-- ✅ CI/CD Pipelines
+## Features
+- Module Federation for micro-frontends
+- Angular Signals for state management
+- Server-Side Rendering (SSR)
+- Comprehensive testing suite
+- Internationalization (i18n)
+- Security hardening
+- Performance optimization
+- Docker containerization
 
 ## Getting Started
-
-```bash
 npm install
-nx serve shell
-```
+npm start
 
+## Build
+npm run build
 
-Álvaro León - Senior Frontend Developer
-
-## Author
-
-Álvaro León - Senior Frontend Developer
+## Test
+npm test
